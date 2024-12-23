@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Record</title>
+</head>
+<body align="center">
+    <h1>Display Record</h1>
+    <div id="records-container">
+        <ul>
+            <% records.forEach(record => { %>
+                <li>
+                    Recipe Name: <%= record.recipeName %><br>
+                    Description: <%= record.description %><br>
+                    User Email: <%= record.userEmail %>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+</html>

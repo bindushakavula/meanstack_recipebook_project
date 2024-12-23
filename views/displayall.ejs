@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipes</title>
+    <style>
+        .recipe-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            width: 100%; /* Display one card per row */
+        }
+
+        .recipe-card h2 {
+            font-size: 18px;
+        }
+
+        .recipe-card p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe List</h1>
+    <% recipes.forEach(recipe => { %>
+        <div class="recipe-card">
+            <h2><%= recipe.recipeName %></h2>
+            <p><%= recipe.description %></p>
+            <p><strong>Author Email:</strong> <%= recipe.userEmail %></p>
+        </div>
+    <% }); %>
+</body>
+</html>

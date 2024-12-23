@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recipe List</h1>
+    </header>
+    <main>
+        <div id="recipeList" class="recipes"></div>
+
+        <script>
+            // Fetch data from the /recipes route and display it
+            fetch('/recipes')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const recipeList = document.getElementById('recipeList');
+                        data.records.forEach(recipe => {
+                            const recipeDiv = document.createElement('div');
+                            recipeDiv.classList.add('recipe');
+                            recipeDiv.innerHTML = `
+                                <h2>${recipe.recipeName}</h2>
+                                <p>${recipe.description}</p>
+                                <p>Recipe by: ${recipe.userEmail}</p>
+                            `;
+                            recipeList.appendChild(recipeDiv);
+                        });
+                    } else {
+                        console.error('Error fetching recipes:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching recipes:', error);
+                });
+        </script>
+    </main>
+</body>
+</html>

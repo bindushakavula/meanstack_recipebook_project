@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("images/add.jpg");
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Add Recipe</h1>
+        <form action="/recipe/add" method="post">
+            <div class="form-group">
+                <label for="recipeName">Recipe Name</label>
+                <input type="text" class="form-control" id="recipeName" name="recipeName" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="6" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="userEmail">Author</label>
+                <input type="text" class="form-control" id="userEmail" name="userEmail" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Recipe</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    document.querySelector('#recipeForm').addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Collect recipe data from the form and store it in the recipeData object
+        const recipeData = {
+            recipeName: document.querySelector('#recipeName').value,
+            description: document.querySelector('#description').value,
+            userEmail: document.querySelector('#userEmail').value,
+        };
+
+        // Send a POST request to add a recipe
+        fetch('/recipe/add', {
+            method: 'POST',
+            body: JSON.stringify(recipeData), // Make sure to send the correct recipe data
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Log the response for debugging
+            console.log('Response from server:', data);
+
+            if (data.error) {
+                // Display the error message on your page
+                console.error('Recipe insertion failed:', data.error);
+            } else {
+                // Recipe added successfully, you can do something here
+            }
+        })
+        .catch(error => {
+            // Handle fetch or network error
+            console.error('Network error:', error);
+        });
+    });
+</script>
+

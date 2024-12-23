@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Global Styles */
+        body {
+           
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar Styles */
+        .navbar {
+            background-color: #007bff; /* Primary blue color for the navigation bar */
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #fff;
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+
+        /* Page Content Styles */
+        .container {
+            background-color: #ffffff; /* White background for the content container */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff; /* Matching the navigation bar color for the heading */
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Recipe Book</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                
+                <!-- Conditional rendering for login/signup links -->
+                <li class="nav-item" id="login-link">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item" id="signup-link">
+                    <a class="nav-link" href="/register">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/displayall">Recipe Book</a>
+                </li>
+            </ul>
+            <!-- User details (hidden by default) -->
+            <ul class="navbar-nav ml-auto" id="user-details" style="display: none;">
+                <li class="nav-item">
+                    <span id="user-email"></span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container mt-5">
+        <h1>Welcome to Recipe Book</h1>
+        <p>Get started by exploring recipes or managing your collection.</p>
+        
+        <!-- Options for logged-in users (hidden by default) -->
+        <div id="user-options" style="display: none;">
+            <h2>Manage Your Recipes</h2>
+            <ul>
+                <li><a href="/recipe/add">Add Recipe</a></li>
+                <li><a href="/recipe/update">Update Recipe</a></li>
+                <li><a href="/recipe/delete">Delete Recipe</a></li>
+                <LI><a href="/displayall">All Recipes</a></LI>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- JavaScript to handle conditional rendering of user details and options -->
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        const userJSON = getQueryParameter('user');
+        
+        if (userJSON) {
+            const user = JSON.parse(userJSON);
+            // Hide login and signup links, show user details
+            document.querySelector('#login-link').style.display = 'none';
+            document.querySelector('#signup-link').style.display = 'none';
+            const userDetailsElement = document.querySelector('#user-details');
+            userDetailsElement.style.display = 'block';
+            userDetailsElement.textContent = `Welcome, ${user.email}`;
+            
+            // Show user options
+            const userOptions = document.querySelector('#user-options');
+            userOptions.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
